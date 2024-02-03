@@ -12,9 +12,7 @@ module Swiftner
   class InternalError < Error; end
 
   def self.create_client(api_key)
-    client = Client.new(api_key)
-    Base.client = client
-    client
+    Base.client = Client.new(api_key)
   end
 
   ### Base
@@ -35,30 +33,32 @@ module Swiftner
       self.class.headers "Api_Key_Header" => api_key
     end
 
+    %i[get post put delete].each do |http_method|
+      define_method(http_method) do |path, options = {}|
+        response = self.class.public_send(http_method, build_path(path), options)
+        handle_response(response)
+      end
+    end
+
     def check_health
-      self.class.get("/health")
-    end
-
-    def get(path, options = {})
-      self.class.get(build_path(path), options)
-    end
-
-    def post(path, options = {})
-      self.class.post(build_path(path), options)
-    end
-
-    def put(path, options = {})
-      self.class.put(build_path(path), options)
-    end
-
-    def delete(path, options = {})
-      self.class.delete(build_path(path), options)
+      get("/health")
     end
 
     private
 
     def build_path(path)
       "#{path}?api_key_query=***REMOVED***"
+    end
+
+    def handle_response(response)
+      case response.code
+      when 200 then response
+      when 401 then raise Unauthorized
+      when 403 then raise Forbidden
+      when 404 then raise NotFound
+      when 500 then raise InternalError
+      else raise Error, "Unknown error occurred"
+      end
     end
   end
 
