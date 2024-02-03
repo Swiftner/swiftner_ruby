@@ -30,7 +30,7 @@ module Swiftner
     base_uri "https://api.swiftner.com"
 
     def initialize(api_key)
-      self.class.headers "api_key" => api_key
+      self.class.headers "Api_Key_Header" => api_key
     end
 
     def check_health
