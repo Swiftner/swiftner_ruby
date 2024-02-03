@@ -20,6 +20,9 @@ def stub_api_requests(api_key)
   stub_post("https://api.swiftner.com/transcription/create", api_key)
   stub_get("https://api.swiftner.com/upload/get/1/transcriptions", [{ id: 1, language: "en" }].to_json, api_key)
   stub_get("https://api.swiftner.com/health", { status: "ok" }.to_json, api_key)
+  stub_get("https://api.swiftner.com/video-content/get-all/", [{ id: 1, media_type: "video" }].to_json, api_key)
+  stub_get("https://api.swiftner.com/video-content/get/1", { id: 1, media_type: "video" }.to_json, api_key)
+  stub_put("https://api.swiftner.com/video-content/update/1", api_key)
 end
 
 def stub_get(url, return_body, api_key)
@@ -34,6 +37,16 @@ end
 
 def stub_post(url, api_key)
   stub_request(:post, build_url(url))
+    .with(headers: { "Api_Key_Header" => api_key })
+    .to_return do |request|
+    persisted_body = JSON.parse(request.body)
+    persisted_body["id"] = 1
+    { status: 200, body: persisted_body.to_json, headers: { "Content-Type" => "application/json" } }
+  end
+end
+
+def stub_put(url, api_key)
+  stub_request(:put, build_url(url))
     .with(headers: { "Api_Key_Header" => api_key })
     .to_return do |request|
     persisted_body = JSON.parse(request.body)

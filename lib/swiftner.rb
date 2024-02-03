@@ -142,5 +142,29 @@ module Swiftner
         API::Transcription.create(transcription)
       end
     end
+
+    ### VideoContent
+    class VideoContent < Service
+      def self.find_video_contents
+        response = Base.client.get("/video-content/get-all/")
+        response.map { |upload| build(upload) }
+      end
+
+      def self.find(id)
+        response = Base.client.get("/video-content/get/#{id}")
+        build(response.parsed_response)
+      end
+
+      def update(attributes)
+        @details = @details.merge(attributes.stringify_keys!)
+
+        client.put(
+          "/video-content/update/#{id}",
+          body: @details.to_json,
+          headers: { "Content-Type" => "application/json" }
+        )
+        self
+      end
+    end
   end
 end
