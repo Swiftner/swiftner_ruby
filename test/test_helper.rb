@@ -6,7 +6,7 @@ require "swiftner"
 require "minitest/autorun"
 require "webmock/minitest"
 
-def create_and_stub_client(api_key = "your_api_key")
+def create_and_stub_client(api_key = "swiftner-api-key")
   @client = Swiftner::Client.new(api_key)
   Swiftner::Base.client = @client
   stub_api_requests(api_key)
@@ -68,5 +68,5 @@ end
 private
 
 def build_url(url)
-  "#{url}?api_key_query=***REMOVED***"
+  "#{url}?api_key_query=swiftner-api-key"
 end
