@@ -47,7 +47,8 @@ module Swiftner
     private
 
     def build_path(path)
-      "#{path}?api_key_query=***REMOVED***"
+      # This is temporary solution because server doesn't accept the API Key in headers for some reason.
+      "#{path}?api_key_query=#{ENV.fetch("SWIFTNER_API_KEY", nil)}"
     end
 
     def handle_response(response)
