@@ -40,19 +40,25 @@ module Swiftner
     end
 
     def get(path, options = {})
-      self.class.get(path, options)
+      self.class.get(build_path(path), options)
     end
 
     def post(path, options = {})
-      self.class.post(path, options)
+      self.class.post(build_path(path), options)
     end
 
     def put(path, options = {})
-      self.class.put(path, options)
+      self.class.put(build_path(path), options)
     end
 
     def delete(path, options = {})
-      self.class.delete(path, options)
+      self.class.delete(build_path(path), options)
+    end
+
+    private
+
+    def build_path(path)
+      "#{path}?api_key_query=***REMOVED***"
     end
   end
 
@@ -63,13 +69,13 @@ module Swiftner
       attr_reader :id, :details, :client
 
       def self.build(details)
-        new(details["id"], details)
+        new(details)
       end
 
-      def initialize(id, details, client = Base.client)
-        @id = id
+      def initialize(attributes = {}, client = Base.client)
+        @id = attributes["id"]
+        @details = attributes
         @client = client
-        @details = details
       end
     end
 
@@ -77,7 +83,21 @@ module Swiftner
     class Transcription < Service
       def self.find(transcription_id)
         response = Base.client.get("/transcription/get/#{transcription_id}")
-        build(response)
+        build(response.parsed_response)
+      end
+
+      def self.create(attributes)
+        response = Base.client.post(
+          "/transcription/create",
+          body: attributes.to_json,
+          headers: { "Content-Type" => "application/json" }
+        )
+
+        build(response.parsed_response)
+      end
+
+      def delete
+        client.delete("/transcription/delete/#{id}")
       end
     end
 
@@ -90,12 +110,36 @@ module Swiftner
 
       def self.find(upload_id)
         response = Base.client.get("/upload/get/#{upload_id}")
-        build(response)
+        build(response.parsed_response)
+      end
+
+      def self.create(attributes)
+        response = Base.client.post(
+          "/upload/create",
+          body: attributes.to_json,
+          headers: { "Content-Type" => "application/json" }
+        )
+        build(response.parsed_response) if response.success?
+      end
+
+      def delete
+        client.delete("/upload/delete/#{id}")
       end
 
       def transcriptions
         response = client.get("/upload/get/#{id}/transcriptions")
         response.map { |transcription| API::Transcription.build(transcription) }
+      end
+
+      def transcribe(language)
+        transcription = {
+          video_content_id: id,
+          language: language,
+          start: 0.0,
+          end: details["duration"],
+          duration: details["duration"]
+        }
+        API::Transcription.create(transcription)
       end
     end
   end
