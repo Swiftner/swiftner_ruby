@@ -3,6 +3,7 @@
 require_relative "swiftner/version"
 require "httparty"
 
+### Swiftner
 module Swiftner
   class Error < StandardError; end
   class Forbidden < Error; end
@@ -16,6 +17,7 @@ module Swiftner
     client
   end
 
+  ### Base
   class Base
     @client = nil
 
@@ -56,6 +58,7 @@ module Swiftner
 
   ### API
   module API
+    ### Service
     class Service
       attr_reader :id, :details, :client
 
@@ -77,6 +80,7 @@ module Swiftner
         build(response)
       end
     end
+
     ### Upload
     class Upload < Service
       def self.find_uploads

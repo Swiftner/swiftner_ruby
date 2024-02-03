@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
-require "minitest/autorun"
-require "webmock/minitest"
-require_relative "../lib/swiftner"
+require "test_helper"
 
 module Swiftner
   class ClientTest < Minitest::Test

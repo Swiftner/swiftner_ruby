@@ -9,7 +9,8 @@ Gem::Specification.new do |spec|
   spec.email = ["martin.ulleberg@gmail.com"]
 
   spec.summary = "API wrapper for Swiftner's AI transcription service."
-  spec.description = "This gem provides an easy-to-use interface for Swiftner's API, allowing seamless integration of AI-driven transcription services into your Ruby applications."
+  spec.description = "This gem provides an easy-to-use interface for Swiftner's API, allowing seamless integration of\
+    AI-driven transcription services into your Ruby applications."
   spec.homepage = "https://swiftner.com"
   spec.required_ruby_version = ">= 2.6.0"
 
@@ -35,4 +36,5 @@ Gem::Specification.new do |spec|
 
   # For more information and examples about making a new gem, check out our
   # guide at: https://bundler.io/guides/creating_gem.html
+  spec.metadata["rubygems_mfa_required"] = "true"
 end

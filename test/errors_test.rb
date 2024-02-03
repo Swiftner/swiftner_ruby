@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
-require "minitest/autorun"
-require_relative "../lib/swiftner"
+require "test_helper"
 
 module Swiftner
   class ErrorsTest < Minitest::Test

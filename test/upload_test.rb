@@ -1,42 +1,36 @@
 # frozen_string_literal: true
 
-require "minitest/autorun"
-require "webmock/minitest"
-require_relative "../lib/swiftner" # Adjust path as necessary
+require "test_helper"
 
-class UploadTest < Minitest::Test
-  def setup
-    api_key = "your_api_key"
-    @client = Swiftner::Client.new(api_key)
-    Swiftner::Base.client = @client
-    @upload_service = Swiftner::API::Upload
+module Swiftner
+  class UploadTest < Minitest::Test
+    include StubApiHelper
 
-    stub_request(:get, "https://api.swiftner.com/upload/get-uploads/")
-      .with(headers: { "Api_Key_Header" => api_key })
-      .to_return(
-        status: 200,
-        body: [{ id: 1, media_type: "video" }].to_json,
-        headers: { "Content-Type" => "application/json" }
-      )
+    def setup
+      api_key = "your_api_key"
+      @client = Swiftner::Client.new(api_key)
+      Swiftner::Base.client = @client
+      @upload_service = Swiftner::API::Upload
 
-    stub_request(:get, "https://api.swiftner.com/upload/get/1")
-      .with(headers: { "Api_Key_Header" => api_key })
-      .to_return(
-        status: 200,
-        body: { id: 1, media_type: "video" }.to_json,
-        headers: { "Content-Type" => "application/json" }
-      )
-  end
+      stub_api("https://api.swiftner.com/upload/get-uploads/",
+               [{ id: 1, media_type: "video" }].to_json,
+               api_key)
 
-  def test_get_uploads
-    uploads = @upload_service.find_uploads
-    assert uploads.is_a?(Array)
-    assert uploads.first.is_a?(Swiftner::API::Upload)
-  end
+      stub_api("https://api.swiftner.com/upload/get/1",
+               { id: 1, media_type: "video" }.to_json,
+               api_key)
+    end
 
-  def test_get_upload
-    upload = @upload_service.find(1)
-    assert upload.is_a?(Swiftner::API::Upload)
-    assert_equal 1, upload.id
+    def test_get_uploads
+      uploads = @upload_service.find_uploads
+      assert uploads.is_a?(Array)
+      assert uploads.first.is_a?(Swiftner::API::Upload)
+    end
+
+    def test_get_upload
+      upload = @upload_service.find(1)
+      assert upload.is_a?(Swiftner::API::Upload)
+      assert_equal 1, upload.id
+    end
   end
 end
