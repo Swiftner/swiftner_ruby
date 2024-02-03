@@ -55,6 +55,7 @@ GEM
 
 PLATFORMS
   arm64-darwin-23
+  x86_64-linux
 
 DEPENDENCIES
   minitest (~> 5.16)
@@ -64,4 +65,4 @@ DEPENDENCIES
   webmock (~> 3.19)
 
 BUNDLED WITH
-   2.4.22
+   2.5.5
