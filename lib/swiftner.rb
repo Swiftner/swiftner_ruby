@@ -157,7 +157,8 @@ module Swiftner
       end
 
       def update(attributes)
-        @details = @details.merge(attributes.stringify_keys!)
+        attributes = attributes.transform_keys(&:to_s)
+        @details = @details.merge(attributes)
 
         client.put(
           "/video-content/update/#{id}",
