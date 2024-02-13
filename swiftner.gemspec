@@ -12,7 +12,7 @@ Gem::Specification.new do |spec|
   spec.description = "This gem provides an easy-to-use interface for Swiftner's API, allowing seamless integration of\
     AI-driven transcription services into your Ruby applications."
   spec.homepage = "https://swiftner.com"
-  spec.required_ruby_version = ">= 2.6.0"
+  spec.required_ruby_version = ">= 3.0.0"
 
   spec.metadata["homepage_uri"] = spec.homepage
   spec.metadata["source_code_uri"] = "https://github.com/swiftner/swiftner_ruby"
