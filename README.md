@@ -7,7 +7,7 @@ This is a Ruby client for interacting with the Swiftner API. It allows you to wo
 
 ## Requirements
 
-- Ruby version: 2.6.0 or later
+- Ruby version: 3.0.0 or later
 
 ## Installation
 
