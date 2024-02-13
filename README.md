@@ -1,4 +1,5 @@
-[!WARNING] Please note that this client is under active development and is not yet ready for production use.  We encourage you to try out its features and provide feedback, and if you're comfortable contributing to an in-progress project, we welcome your help in improving it. However, we recommend against deploying it to a production environment until its features have been more thoroughly tested and stabilized. We appreciate your understanding and patience! [!WARNING]
+> [!WARNING]
+> Please note that this client is under active development and is not yet ready for production use.  We encourage you to try out its features and provide feedback, and if you're comfortable contributing to an in-progress project, we welcome your help in improving it. However, we recommend against deploying it to a production environment until its features have been more thoroughly tested and stabilized. We appreciate your understanding and patience!
 
 # Swiftner API Ruby Client
 
