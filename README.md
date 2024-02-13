@@ -1,12 +1,14 @@
-# Swiftner
+[!WARNING] Please note that this client is under active development and is not yet ready for production use.  We encourage you to try out its features and provide feedback, and if you're comfortable contributing to an in-progress project, we welcome your help in improving it. However, we recommend against deploying it to a production environment until its features have been more thoroughly tested and stabilized. We appreciate your understanding and patience! [!WARNING]
 
-TODO: Delete this and the text below, and describe your gem
+# Swiftner API Ruby Client
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/swiftner`. To experiment with that code, run `bin/console` for an interactive prompt.
+This is a Ruby client for interacting with the Swiftner API. It allows you to work with videos, transcriptions, errors, and perform various actions such as uploading, deleting, updating, and fetching information. This client make it easier to deal with HTTP requests by providing a Ruby-oriented interface with built-in error handling.
+
+## Requirements
+
+- Ruby version: 2.6.0 or later
 
 ## Installation
-
-TODO: Replace `swiftner` with your gem name right after releasing it to RubyGems.org. Please do not do it earlier due to security reasons. Alternatively, replace this section with instructions to install your gem from git if you don't plan to release to RubyGems.org.
 
 Install the gem and add to the application's Gemfile by executing:
 
@@ -18,7 +20,56 @@ If bundler is not being used to manage dependencies, install the gem by executin
 
 ## Usage
 
-TODO: Write usage instructions here
+This section includes syntax examples of some of the key features of the Swiftner API Ruby client.
+
+### Initializing the Client
+```ruby
+@api_key = "swiftner_api_key"
+@client = Swiftner::Client.new(@api_key)
+```
+
+### Working with Video Content
+```ruby
+@video_content_service = Swiftner::API::VideoContent
+
+# Find video contents
+video_contents = @video_content_service.find_video_contents
+
+# Find specific video content by ID
+video_content = @video_content_service.find(1)
+
+# Update the title of a video content
+video_content.update(title: "New title")
+```
+
+### Working with Uploads
+```ruby
+@upload_service = Swiftner::API::Upload
+
+# Find uploads
+uploads = @upload_service.find_uploads
+
+# Create an upload
+upload = @upload_service.create(sample_attributes)
+
+# Delete an upload
+upload.delete
+
+# Transcribe an upload
+upload.transcribe("no")
+```
+
+### Handling Exceptions
+The Swiftner API Ruby Client includes custom exceptions for handling API errors. These inherit from either the base Swiftner::Error class or the standard Ruby StandardError class.
+```ruby
+begin
+  # some code that might raise an exception
+rescue Swiftner::Forbidden => e
+  puts "Handle forbidden error here"
+rescue Swiftner::Unauthorized => e
+  puts "Handle unauthorized error here"
+end
+```
 
 ## Development
 
