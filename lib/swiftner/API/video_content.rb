@@ -7,7 +7,7 @@ module Swiftner
     class VideoContent < Service
       def self.find_video_contents
         response = client.get("/video-content/get-all/")
-        response.map { |upload| build(upload) }
+        map_collection(response)
       end
 
       def self.find(id)
