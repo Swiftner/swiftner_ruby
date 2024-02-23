@@ -26,7 +26,7 @@ def stub_api_requests(api_key)
 end
 
 def stub_get(url, return_body, api_key)
-  stub_request(:get, build_url(url))
+  stub_request(:get, url)
     .with(headers: { "Api_Key_Header" => api_key })
     .to_return(
       status: 200,
@@ -36,7 +36,7 @@ def stub_get(url, return_body, api_key)
 end
 
 def stub_post(url, api_key)
-  stub_request(:post, build_url(url))
+  stub_request(:post, url)
     .with(headers: { "Api_Key_Header" => api_key })
     .to_return do |request|
     persisted_body = JSON.parse(request.body)
@@ -46,7 +46,7 @@ def stub_post(url, api_key)
 end
 
 def stub_put(url, api_key)
-  stub_request(:put, build_url(url))
+  stub_request(:put, url)
     .with(headers: { "Api_Key_Header" => api_key })
     .to_return do |request|
     persisted_body = JSON.parse(request.body)
@@ -56,17 +56,11 @@ def stub_put(url, api_key)
 end
 
 def stub_delete(url, api_key)
-  stub_request(:delete, build_url(url))
+  stub_request(:delete, url)
     .with(headers: { "Api_Key_Header" => api_key })
     .to_return(
       status: 200,
       body: { status: "success" }.to_json,
       headers: { "Content-Type" => "application/json" }
     )
-end
-
-private
-
-def build_url(url)
-  "#{url}?api_key_query=swiftner-api-key"
 end
