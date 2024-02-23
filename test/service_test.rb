@@ -19,6 +19,16 @@ class ServiceTest < Minitest::Test
     end
   end
 
+  def test_validate_required
+    assert_raises ArgumentError do
+      Swiftner::API::Service.validate_required({ name: "test" }, :name, :description)
+    end
+
+    assert_silent do
+      Swiftner::API::Service.validate_required({ name: "test", description: "description text" }, :name, :description)
+    end
+  end
+
   def teardown
     # Restore original Swiftner configuration
     Swiftner.configuration = @original_config

@@ -8,7 +8,7 @@ module Swiftner
     class Upload < Service
       def self.find_uploads
         response = client.get("/upload/get-uploads/")
-        response.map { |upload| build(upload) }
+        map_collection(response)
       end
 
       def self.find(upload_id)
