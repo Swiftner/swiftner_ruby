@@ -25,8 +25,11 @@ This section includes syntax examples of some of the key features of the Swiftne
 
 ### Initializing the Client
 ```ruby
-@api_key = "swiftner_api_key"
-@client = Swiftner::Client.new(@api_key)
+api_key = "swiftner_api_key"
+
+Swiftner.configure do |config|
+  config.client = Swiftner::Client.new(api_key)
+end
 ```
 
 ### Working with Video Content

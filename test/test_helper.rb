@@ -7,8 +7,11 @@ require "minitest/autorun"
 require "webmock/minitest"
 
 def create_and_stub_client(api_key = "swiftner-api-key")
-  @client = Swiftner::Client.new(api_key)
-  Swiftner::Base.client = @client
+  Swiftner.configure do |config|
+    config.client = Swiftner::Client.new(api_key)
+  end
+
+  @client = Swiftner.configuration.client
   stub_api_requests(api_key)
 end
 

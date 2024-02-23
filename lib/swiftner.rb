@@ -4,7 +4,7 @@ require_relative "swiftner/API/service"
 require_relative "swiftner/API/transcription"
 require_relative "swiftner/API/upload"
 require_relative "swiftner/API/video_content"
-require_relative "swiftner/base"
+require_relative "swiftner/configuration"
 require_relative "swiftner/client"
 require_relative "swiftner/version"
 
@@ -16,7 +16,12 @@ module Swiftner
   class NotFound < Error; end
   class InternalError < Error; end
 
-  def self.create_client(api_key)
-    Base.client = Client.new(api_key)
+  class << self
+    attr_accessor :configuration
+  end
+
+  def self.configure
+    self.configuration ||= Configuration.new
+    yield(configuration)
   end
 end
