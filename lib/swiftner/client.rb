@@ -16,7 +16,7 @@ module Swiftner
 
     %i[get post put delete].each do |http_method|
       define_method(http_method) do |path, options = {}|
-        response = self.class.public_send(http_method, build_path(path), options)
+        response = self.class.public_send(http_method, path, options)
         handle_response(response)
       end
     end
@@ -26,11 +26,6 @@ module Swiftner
     end
 
     private
-
-    def build_path(path)
-      # This is temporary solution because server doesn't accept the API Key in headers for some reason.
-      "#{path}?api_key_query=#{ENV.fetch("SWIFTNER_API_KEY", "swiftner-api-key")}"
-    end
 
     def handle_response(response)
       case response.code

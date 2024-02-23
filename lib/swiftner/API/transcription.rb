@@ -7,12 +7,12 @@ module Swiftner
     # Provides methods for interacting with transcriptions.
     class Transcription < Service
       def self.find(transcription_id)
-        response = Base.client.get("/transcription/get/#{transcription_id}")
+        response = client.get("/transcription/get/#{transcription_id}")
         build(response.parsed_response)
       end
 
       def self.create(attributes)
-        response = Base.client.post(
+        response = client.post(
           "/transcription/create",
           body: attributes.to_json,
           headers: { "Content-Type" => "application/json" }

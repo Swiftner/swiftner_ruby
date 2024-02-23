@@ -6,12 +6,12 @@ module Swiftner
     # It allows you to find and update video content.
     class VideoContent < Service
       def self.find_video_contents
-        response = Base.client.get("/video-content/get-all/")
+        response = client.get("/video-content/get-all/")
         response.map { |upload| build(upload) }
       end
 
       def self.find(id)
-        response = Base.client.get("/video-content/get/#{id}")
+        response = client.get("/video-content/get/#{id}")
         build(response.parsed_response)
       end
 

@@ -10,7 +10,13 @@ module Swiftner
         new(details)
       end
 
-      def initialize(attributes = {}, client = Base.client)
+      def self.client
+        Swiftner.configuration.client
+      end
+
+      def initialize(attributes = {}, client = self.class.client)
+        raise Swiftner::Error, "Client must be set" if client.nil?
+
         @id = attributes["id"]
         @details = attributes
         @client = client

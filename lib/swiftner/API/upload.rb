@@ -7,17 +7,17 @@ module Swiftner
     # to an upload.
     class Upload < Service
       def self.find_uploads
-        response = Base.client.get("/upload/get-uploads/")
+        response = client.get("/upload/get-uploads/")
         response.map { |upload| build(upload) }
       end
 
       def self.find(upload_id)
-        response = Base.client.get("/upload/get/#{upload_id}")
+        response = client.get("/upload/get/#{upload_id}")
         build(response.parsed_response)
       end
 
       def self.create(attributes)
-        response = Base.client.post(
+        response = client.post(
           "/upload/create",
           body: attributes.to_json,
           headers: { "Content-Type" => "application/json" }
