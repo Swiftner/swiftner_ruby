@@ -74,7 +74,7 @@ def stub_put(url, api_key)
     .with(headers: { "Api_Key_Header" => api_key })
     .to_return do |request|
     persisted_body = JSON.parse(request.body)
-    persisted_body.is_a?(Array) ? persisted_body.map { |i| i["id"] = 1 } :
+    persisted_body["id"] = 1
     { status: 200, body: persisted_body.to_json, headers: { "Content-Type" => "application/json" } }
   end
 end
