@@ -63,6 +63,26 @@ upload.delete
 upload.transcribe("no")
 ```
 
+### Working with Linked Content
+```ruby
+@linked_content_service = Swiftner::API::LinkedContent
+
+# Find uploads
+linked_contents = @linked_content_service.find_linked_contents
+
+# Find linked content
+linked_content = @linked_content_service.find(1)
+
+# Create an upload
+linked_content = @linked_content_service.create(sample_attributes)
+
+# Find linked content transcriptions
+transcriptions = linked_content.transcriptions
+
+# Batch create linked content
+linked_contents = @linked_content_service.batch_create([sample_attributes, sample_attributes])
+```
+
 ### Handling Exceptions
 The Swiftner API Ruby Client includes custom exceptions for handling API errors. These inherit from either the base Swiftner::Error class or the standard Ruby StandardError class.
 ```ruby
