@@ -67,7 +67,7 @@ upload.transcribe("no")
 ```ruby
 @linked_content_service = Swiftner::API::LinkedContent
 
-# Find uploads
+# Find linked contents
 linked_contents = @linked_content_service.find_linked_contents
 
 # Find linked content
@@ -81,6 +81,12 @@ transcriptions = linked_content.transcriptions
 
 # Batch create linked content
 linked_contents = @linked_content_service.batch_create([sample_attributes, sample_attributes])
+
+# Restart transcription process
+linked_content.transcribe
+
+# Delete linked content
+linked_content.delete
 ```
 
 ### Handling Exceptions

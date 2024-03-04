@@ -56,6 +56,21 @@ module Swiftner
         response = client.get("/linked-content/get/#{id}/transcriptions")
         response.map { |transcription| API::Transcription.build(transcription) }
       end
+
+      def delete
+        client.delete("/linked-content/delete/#{id}")
+      end
+
+      def transcribe
+        response = client.post(
+          "/linked-content/transcribe/#{id}",
+          body: @details.to_json,
+          headers: { "Content-Type" => "application/json" }
+        )
+        @details = @details.merge(response.parsed_response)
+
+        self
+      end
     end
   end
 end

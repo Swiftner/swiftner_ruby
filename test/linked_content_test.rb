@@ -46,18 +46,27 @@ class LinkedContentTest < Minitest::Test
     assert transcriptions.first.is_a?(Swiftner::API::Transcription)
   end
 
+  def test_delete_linked_content
+    linked_content = @linked_content_service.find(1)
+    response = linked_content.delete
+    assert_equal "success", response["status"]
+  end
+
+  def test_transcribe_linked_content
+    linked_content = @linked_content_service.find(1)
+    response = linked_content.transcribe
+    assert response.is_a?(Swiftner::API::LinkedContent)
+    assert_equal 1, response.id
+    assert response.transcriptions.is_a?(Array)
+    assert response.transcriptions.first.is_a?(Swiftner::API::Transcription)
+  end
+
   private
 
   def sample_attributes
     {
       title: "Sample title",
-      description: "Sample description",
-      start: "2024-02-03T12:29:07.142Z",
-      language: "en",
       url: "url",
-      thumbnail_url: "sample/thumbnail_url",
-      audio_url: "sample/audio_url",
-      duration: 0,
       meta: {}
     }
   end

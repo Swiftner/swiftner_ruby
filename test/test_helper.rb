@@ -33,7 +33,9 @@ def stub_api_requests(api_key)
   stub_post("https://api.swiftner.com/linked-content/create", api_key)
   stub_post("https://api.swiftner.com/linked-content/batch-create", api_key)
   stub_put("https://api.swiftner.com/linked-content/update/1", api_key)
+  stub_delete("https://api.swiftner.com/linked-content/delete/1", api_key)
   stub_get("https://api.swiftner.com/linked-content/get/1/transcriptions", [{ id: 1, language: "en" }].to_json, api_key)
+  stub_post("https://api.swiftner.com/linked-content/transcribe/1", api_key)
 
   stub_get("https://api.swiftner.com/space/get-spaces", [{ id: 1, name: "test", description: "test" }].to_json, api_key)
   stub_get("https://api.swiftner.com/space/get/1", { id: 1, name: "test", description: "test" }.to_json, api_key)
@@ -57,13 +59,7 @@ def stub_post(url, api_key)
   stub_request(:post, url)
     .with(headers: { "Api_Key_Header" => api_key })
     .to_return do |request|
-    persisted_body = JSON.parse(request.body)
-
-    if persisted_body.is_a?(Array)
-      persisted_body.map { |item| item["id"] = 1 }
-    else
-      persisted_body["id"] = 1
-    end
+    persisted_body = parse_body(request.body)
 
     { status: 200, body: persisted_body.to_json, headers: { "Content-Type" => "application/json" } }
   end
@@ -73,8 +69,7 @@ def stub_put(url, api_key)
   stub_request(:put, url)
     .with(headers: { "Api_Key_Header" => api_key })
     .to_return do |request|
-    persisted_body = JSON.parse(request.body)
-    persisted_body["id"] = 1
+    persisted_body = parse_body(request.body)
     { status: 200, body: persisted_body.to_json, headers: { "Content-Type" => "application/json" } }
   end
 end
@@ -87,4 +82,14 @@ def stub_delete(url, api_key)
       body: { status: "success" }.to_json,
       headers: { "Content-Type" => "application/json" }
     )
+end
+
+def parse_body(body)
+  persisted_body = JSON.parse(body)
+  if persisted_body.is_a?(Array)
+    persisted_body.map { |item| item["id"] = 1 }
+  else
+    persisted_body["id"] = 1
+  end
+  persisted_body
 end
