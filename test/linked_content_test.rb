@@ -66,13 +66,7 @@ class LinkedContentTest < Minitest::Test
   def sample_attributes
     {
       title: "Sample title",
-      description: "Sample description",
-      start: "2024-02-03T12:29:07.142Z",
-      language: "en",
       url: "url",
-      thumbnail_url: "sample/thumbnail_url",
-      audio_url: "sample/audio_url",
-      duration: 0,
       meta: {}
     }
   end
