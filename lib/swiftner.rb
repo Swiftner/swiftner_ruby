@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require_relative "swiftner/error"
 require_relative "swiftner/API/service"
 require_relative "swiftner/API/space"
 require_relative "swiftner/API/transcription"
@@ -12,12 +13,6 @@ require_relative "swiftner/version"
 
 ### Swiftner
 module Swiftner
-  class Error < StandardError; end
-  class Forbidden < Error; end
-  class Unauthorized < Error; end
-  class NotFound < Error; end
-  class InternalError < Error; end
-
   class << self
     attr_accessor :configuration
   end

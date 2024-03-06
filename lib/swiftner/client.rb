@@ -30,11 +30,11 @@ module Swiftner
     def handle_response(response)
       case response.code
       when 200 then response
-      when 401 then raise Unauthorized
-      when 403 then raise Forbidden
-      when 404 then raise NotFound
-      when 500 then raise InternalError
-      else raise Error, "Unknown error occurred"
+      when 401 then raise Unauthorized.from_response(response)
+      when 403 then raise Forbidden.from_response(response)
+      when 404 then raise NotFound.from_response(response)
+      when 500 then raise InternalError.from_response(response)
+      else raise Error.new("Unknown error occurred", response: response)
       end
     end
   end
