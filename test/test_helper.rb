@@ -42,6 +42,8 @@ def stub_api_requests(api_key)
   stub_post("https://api.swiftner.com/space/create", api_key)
   stub_put("https://api.swiftner.com/space/update/1", api_key)
   stub_delete("https://api.swiftner.com/space/delete/1", api_key)
+
+  stub_post("https://api.swiftner.com/organisation/create", api_key)
 end
 # rubocop:enable Metrics/AbcSize,Metrics/MethodLength
 
