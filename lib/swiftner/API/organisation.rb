@@ -2,18 +2,69 @@
 
 module Swiftner
   module API
-    # Represents a Space service responsible for finding, creating, and deleting spaces.
+    # Represents a Organisation service responsible for finding, creating, and deleting organisations.
     # Inherits from the Service class.
     # Provides methods for interacting with spaces.
     class Organisation < Service
+      REQUIRED_ATTRIBUTES = %i[name].freeze
+
+      # Finds all organisations user is in
+      # @return [Array<Swiftner::API::Organisation>]
+      def self.find_organisations
+        response = client.get("/organisation/get-current-user-orgs")
+        map_collection(response)
+      end
+
+      # Find organisation by id
+      # @param [Integer] organisation_id
+      # @return [Swiftner::API::Organisation]
+      def self.find(organisation_id)
+        response = client.get("/organisation/get/#{organisation_id}")
+        build(response.parsed_response)
+      end
+
+      # Creates a new organisation
+      # @param [Hash] attributes
+      # @option attributes [String] :name (required)
+      # @option attributes [String] :description (optional)
+      # @option attributes [Integer] :default_prompt_id (optional)
+      # @option attributes [String] :language (optional)
+      # @return [Swiftner::API::Organisation]
       def self.create(attributes)
-        validate_required(attributes, :name, :description)
+        validate_required(attributes, *REQUIRED_ATTRIBUTES)
         response = client.post(
           "/organisation/create",
           body: attributes.to_json,
           headers: { "Content-Type" => "application/json" }
         )
         build(response.parsed_response)
+      end
+
+      # Updates organisation
+      # @param [Hash] attributes
+      # @option attributes [String] :name (optional)
+      # @option attributes [String] :description (optional)
+      # @option attributes [Integer] :default_prompt_id (optional)
+      # @option attributes [String] :language (optional)
+      # @return [Swiftner::API::Organisation]
+      def update(attributes)
+        attributes = attributes.transform_keys(&:to_s)
+        @details = @details.merge(attributes)
+
+        self.class.validate_required(@details, *REQUIRED_ATTRIBUTES)
+
+        client.put(
+          "/organisation/update/#{id}",
+          body: @details.to_json,
+          headers: { "Content-Type" => "application/json" }
+        )
+        self
+      end
+
+      # Delete organisation
+      # @return [nil]
+      def delete
+        client.delete("/organisation/delete/#{id}")
       end
     end
   end
