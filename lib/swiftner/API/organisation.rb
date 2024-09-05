@@ -15,7 +15,7 @@ module Swiftner
         map_collection(response)
       end
 
-      # Find organisation by id
+      # Finds organisation by id
       # @param [Integer] organisation_id
       # @return [Swiftner::API::Organisation]
       def self.find(organisation_id)
@@ -61,8 +61,7 @@ module Swiftner
         self
       end
 
-      # Delete organisation
-      # @return [nil]
+      # Deletes organisation
       def delete
         client.delete("/organisation/delete/#{id}")
       end
