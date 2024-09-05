@@ -32,7 +32,7 @@ module Swiftner
         attributes = attributes.transform_keys(&:to_s)
         @details = @details.merge(attributes)
 
-        self.class.validate_required(@details, :title, :start, :duration )
+        self.class.validate_required(@details, :title, :start, :duration)
 
         client.put(
           "/chapter/update/#{id}",

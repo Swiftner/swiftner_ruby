@@ -43,8 +43,10 @@ def stub_api_requests(api_key)
   stub_put("https://api.swiftner.com/space/update/1", api_key)
   stub_delete("https://api.swiftner.com/space/delete/1", api_key)
 
-  stub_get("https://api.swiftner.com/video-content/get/1/chapters", [{ id: 1, title: "test", start: "2024-09-09T00:00:00", duration: "2024-09-09T00:00:02" }].to_json, api_key)
-  stub_get("https://api.swiftner.com/chapter/get/1", { id: 1, title: "test", start: "2024-09-09T00:00:00", duration: "2024-09-09T00:00:02" }.to_json, api_key)
+  stub_get("https://api.swiftner.com/video-content/get/1/chapters",
+           [{ id: 1, title: "test", start: "2024-09-09T00:00:00", duration: "2024-09-09T00:00:02" }].to_json, api_key)
+  stub_get("https://api.swiftner.com/chapter/get/1",
+           { id: 1, title: "test", start: "2024-09-09T00:00:00", duration: "2024-09-09T00:00:02" }.to_json, api_key)
   stub_post("https://api.swiftner.com/chapter/create", api_key)
   stub_put("https://api.swiftner.com/chapter/update/1", api_key)
   stub_delete("https://api.swiftner.com/chapter/delete/1", api_key)
