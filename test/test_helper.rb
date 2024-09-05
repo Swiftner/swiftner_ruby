@@ -48,8 +48,22 @@ def stub_api_requests(api_key)
   stub_post("https://api.swiftner.com/chapter/create", api_key)
   stub_put("https://api.swiftner.com/chapter/update/1", api_key)
   stub_delete("https://api.swiftner.com/chapter/delete/1", api_key)
-  # rubocop:enable Metrics/LineLength, Metrics/ MethodLength
+  
+  stub_get("https://api.swiftner.com/organisation/get-current-user-orgs",
+           [{ id: 1, name: "test", description: "test" }].to_json, api_key)
+  stub_get("https://api.swiftner.com/organisation/get/1", { id: 1, name: "test", description: "test" }.to_json, api_key)
+  stub_request(:put, "https://api.swiftner.com/organisation/add-org-to-token?organisation_id=1")
+    .with(headers: { "Api_Key_Header" => api_key })
+    .to_return do
+    { status: 200, body: { "access_token" => "eyekljsadflkajdfs" }.to_json,
+      headers: { "Content-Type" => "application/json" } }
+  end
+  stub_post("https://api.swiftner.com/organisation/create", api_key)
+  stub_put("https://api.swiftner.com/organisation/update/1", api_key)
+  stub_delete("https://api.swiftner.com/organisation/delete/1", api_key)
 end
+  # rubocop:enable Metrics/LineLength, Metrics/ MethodLength
+
 
 def stub_get(url, return_body, api_key)
   stub_request(:get, url)
