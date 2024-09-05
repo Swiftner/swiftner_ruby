@@ -1,6 +1,4 @@
 ## [Unreleased]
-
-## [0.0.3] - 2024-09-05
 - Added Chapter service with CRUD operations. [#8](https://github.com/Swiftner/swiftner_ruby/pull/8)
 
  
