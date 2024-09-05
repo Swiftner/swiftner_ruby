@@ -15,7 +15,6 @@ module Swiftner
         )
         build(response.parsed_response)
       end
-
     end
   end
 end
