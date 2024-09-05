@@ -6,7 +6,7 @@ module Swiftner
     # Inherits from the Service class.
     # Provides methods for interacting with chapters.
     class Chapter < Service
-      REQUIRED_ATTRIBUTES = %i[title duration video_content_id].freeze
+      REQUIRED_ATTRIBUTES = %i[title duration video_content_id start].freeze
       # Finds all chapters for a video content.
       # @param [Integer] video_content_id
       # @return [Array<Swiftner::API::Chapter>]
@@ -28,7 +28,7 @@ module Swiftner
       # @option attributes [String] :title (required)
       # @option attributes [String] :duration (required)
       # @option attributes [Integer] :video_content_id (required)
-      # @option attributes [String] :start (optional)
+      # @option attributes [String] :start (required)
       # @option attributes [String] :start_seconds (optional)
       # @option attributes [String] :language (optional)
       # @return [Swiftner::API::Chapter]
