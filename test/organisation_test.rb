@@ -20,6 +20,11 @@ class OrganisationTest < Minitest::Test
     assert_equal 1, organisation.id
   end
 
+  def test_add_org_to_token
+    response = @organisation_service.add_org_to_token(1)
+    assert response["access_token"].must_be_instance_of(String)
+  end
+
   def test_create_organisation
     organisation = @organisation_service.create({ name: "New organisation", description: "For everything new" })
     assert organisation.is_a?(Swiftner::API::Organisation)
