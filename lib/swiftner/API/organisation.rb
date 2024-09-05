@@ -29,6 +29,7 @@ module Swiftner
       def self.add_org_to_token(organisation_id)
         client.put("/organisation/add-org-to-token?organisation_id=#{organisation_id}")
       end
+
       # Creates a new organisation
       # @param [Hash] attributes
       # @option attributes [String] :name (required)

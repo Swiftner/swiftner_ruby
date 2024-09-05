@@ -22,7 +22,7 @@ class OrganisationTest < Minitest::Test
 
   def test_add_org_to_token
     response = @organisation_service.add_org_to_token(1)
-    assert response["access_token"].must_be_instance_of(String)
+    assert_instance_of String, response["access_token"]
   end
 
   def test_create_organisation
