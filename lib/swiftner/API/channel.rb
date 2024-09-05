@@ -4,9 +4,9 @@ module Swiftner
   module API
     # Represents a Channel service responsible for finding, creating, updating and deleting channels.
     # Inherits from the Service class.
-    # Provides methods for interacting with channel_id.
+    # Provides methods for interacting with channel.
     class Channel < Service
-      REQUIRED_ATTRIBUTES = %i[name type channel_id].freeze
+      REQUIRED_ATTRIBUTES = %i[name type space_id].freeze
 
       # Finds all channels
       # @return [Array<Swiftner::API::Channel>]
@@ -26,7 +26,7 @@ module Swiftner
       # @param [Hash] attributes
       # @option attributes [String] :name (required)
       # @option attributes [String] :type (required) - "audio", "video" or "dual"
-      # @option attributes [Integer] :channel_id (required)
+      # @option attributes [Integer] :space_id (required)
       # @option attributes [String] :description (optional)
       # @option attributes [Integer] :order (optional)
       # @return [Swiftner::API::Channel]
@@ -45,7 +45,7 @@ module Swiftner
       # @param [Hash] attributes
       # @option attributes [String] :name (required)
       # @option attributes [String] :type (required) - "audio", "video" or "dual"
-      # @option attributes [Integer] :channel_id (required)
+      # @option attributes [Integer] :space_id (required)
       # @option attributes [String] :description (optional)
       # @option attributes [Integer] :order (optional)
       # @return [Swiftner::API::Channel]

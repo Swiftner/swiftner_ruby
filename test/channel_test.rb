@@ -21,7 +21,7 @@ class ChannelTest < Minitest::Test
   end
 
   def test_create_channel
-    channel = @channel_service.create({ name: "New channel", type: "audio", channel_id: 1 })
+    channel = @channel_service.create({ name: "New channel", type: "audio", space_id: 1 })
     assert channel.is_a?(Swiftner::API::Channel)
     refute_nil channel.id
     assert_equal "New channel", channel.details["name"]
