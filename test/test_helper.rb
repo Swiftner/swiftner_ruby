@@ -15,7 +15,7 @@ def create_and_stub_client(api_key = "swiftner-api-key")
   stub_api_requests(api_key)
 end
 
-# rubocop:disable Metrics/AbcSize,Metrics/MethodLength
+# rubocop:disable Metrics/LineLength, Metrics/ MethodLength
 def stub_api_requests(api_key)
   stub_get("https://api.swiftner.com/upload/get-uploads/", [{ id: 1, media_type: "video" }].to_json, api_key)
   stub_get("https://api.swiftner.com/upload/get/1", { id: 1, media_type: "video" }.to_json, api_key)
@@ -43,15 +43,13 @@ def stub_api_requests(api_key)
   stub_put("https://api.swiftner.com/space/update/1", api_key)
   stub_delete("https://api.swiftner.com/space/delete/1", api_key)
 
-  stub_get("https://api.swiftner.com/video-content/get/1/chapters",
-           [{ id: 1, title: "test", start: "2024-09-09T00:00:00", duration: "2024-09-09T00:00:02" }].to_json, api_key)
-  stub_get("https://api.swiftner.com/chapter/get/1",
-           { id: 1, title: "test", start: "2024-09-09T00:00:00", duration: "2024-09-09T00:00:02" }.to_json, api_key)
+  stub_get("https://api.swiftner.com/video-content/get/1/chapters", [{ id: 1, title: "test", start: "2024-09-09T00:00:00", duration: "2024-09-09T00:00:02", video_content_id: 1 }].to_json, api_key)
+  stub_get("https://api.swiftner.com/chapter/get/1", { id: 1, title: "test", start: "2024-09-09T00:00:00", duration: "2024-09-09T00:00:02", video_content_id: 1 }.to_json, api_key)
   stub_post("https://api.swiftner.com/chapter/create", api_key)
   stub_put("https://api.swiftner.com/chapter/update/1", api_key)
   stub_delete("https://api.swiftner.com/chapter/delete/1", api_key)
+  # rubocop:enable Metrics/LineLength, Metrics/ MethodLength
 end
-# rubocop:enable Metrics/AbcSize,Metrics/MethodLength
 
 def stub_get(url, return_body, api_key)
   stub_request(:get, url)
