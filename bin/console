@@ -7,5 +7,24 @@ require "swiftner"
 # You can add fixtures and/or initialization code here to make experimenting
 # with your gem easier. You can also use a different console, if you like.
 
+def reload!
+  # Disabling warnings again
+  original_verbose = $VERBOSE
+  $VERBOSE = nil
+
+  Dir["lib/**/*.rb"].each { |file| load file }
+  # Enabling warnings again
+  $VERBOSE = original_verbose
+
+  load_config
+end
+
+def load_config
+  Swiftner.configure do |config|
+    config.client = Swiftner::Client.new(ENV.fetch("SWIFTNER_API_KEY", nil))
+  end
+end
+
+load_config
 require "irb"
 IRB.start(__FILE__)
