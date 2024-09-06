@@ -20,6 +20,12 @@ class ChannelTest < Minitest::Test
     assert_equal 1, channel.id
   end
 
+  def test_channel_live
+    channel = @channel_service.find(1)
+    response = channel.live?
+    assert_equal "live", response["status"]
+  end
+
   def test_create_channel
     channel = @channel_service.create({ name: "New channel", type: "audio", space_id: 1 })
     assert channel.is_a?(Swiftner::API::Channel)

@@ -42,6 +42,11 @@ module Swiftner
         build(response.parsed_response)
       end
 
+      # @return [Hash]
+      def live?
+        client.get("/channel/is_channel_live?channel_id=#{id}")
+      end
+
       # @param [Hash] attributes
       # @option attributes [String] :name (required)
       # @option attributes [String] :type (required) - "audio", "video" or "dual"
