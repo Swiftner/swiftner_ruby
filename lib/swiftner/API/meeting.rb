@@ -62,7 +62,7 @@ module Swiftner
         attributes = attributes.transform_keys(&:to_s)
         @details = @details.merge(attributes)
 
-        self.class.validate_required(@details, *REQUIRED_ATTRIBUTES)
+        self.class.validate_required(@details, :language, :space)
 
         client.put(
           "/meeting/update/#{id}",
