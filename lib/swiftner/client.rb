@@ -29,7 +29,7 @@ module Swiftner
 
     def handle_response(response)
       case response.code
-      when 200 then response
+      when 200, 201 then response
       when 401 then raise Unauthorized.from_response(response)
       when 403 then raise Forbidden.from_response(response)
       when 404 then raise NotFound.from_response(response)
