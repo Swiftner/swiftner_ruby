@@ -22,8 +22,7 @@ class ChannelTest < Minitest::Test
 
   def test_channel_live
     channel = @channel_service.find(1)
-    response = channel.live?
-    assert_equal "live", response["status"]
+    assert channel.live?
   end
 
   def test_create_channel

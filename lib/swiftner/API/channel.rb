@@ -42,9 +42,12 @@ module Swiftner
         build(response.parsed_response)
       end
 
-      # @return [Hash]
+      # @return [Boolean]
       def live?
-        client.get("/channel/is_channel_live?channel_id=#{id}")
+        client.get("/channel/is_channel_live?channel_id=#{id}")["status"] == "live"
+      rescue Swiftner::NotFound
+        # Why does api return 404 when channel is not live?
+        false
       end
 
       # @param [Hash] attributes
