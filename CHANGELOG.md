@@ -1,4 +1,6 @@
 ## [Unreleased]
+- Extracted stubs from `test_helper.rb` and moved them to each respective service test file. [#14](https://github.com/Swiftner/swiftner_ruby/pull/14)
+
 
 ## [0.0.6]
 - Added Meeting service with CRUD operations and `start`, `end`, `pause` and `resume`. [#10](https://github.com/Swiftner/swiftner_ruby/pull/10)
