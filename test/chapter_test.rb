@@ -8,6 +8,7 @@ class ChapterTest < Minitest::Test
     create_and_stub_client
   end
 
+  # rubocop:disable Layout/LineLength
   def stub_api_requests(api_key = "swiftner-api-key")
     stub_get("https://api.swiftner.com/video-content/get/1/chapters", [{ id: 1, title: "test", start: "2024-09-09T00:00:00", duration: "2024-09-09T00:00:02", video_content_id: 1 }].to_json, api_key)
     stub_get("https://api.swiftner.com/chapter/get/1", { id: 1, title: "test", start: "2024-09-09T00:00:00", duration: "2024-09-09T00:00:02", video_content_id: 1 }.to_json, api_key)
@@ -15,6 +16,7 @@ class ChapterTest < Minitest::Test
     stub_put("https://api.swiftner.com/chapter/update/1", api_key)
     stub_delete("https://api.swiftner.com/chapter/delete/1", api_key)
   end
+  # rubocop:enable Layout/LineLength
 
   def test_find_chapters
     chapters = @chapter_service.find_chapters(1)

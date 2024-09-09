@@ -8,6 +8,7 @@ class ChannelTest < Minitest::Test
     create_and_stub_client
   end
 
+  # rubocop:disable Layout/LineLength
   def stub_api_requests(api_key = "swiftner-api-key")
     stub_get("https://api.swiftner.com/channel/get-channels", [{ id: 1, name: "test", type: "audio", space_id: 1 }].to_json, api_key)
     stub_get("https://api.swiftner.com/channel/is_channel_live?channel_id=1", { "status" => "live" }.to_json, api_key)
@@ -16,6 +17,7 @@ class ChannelTest < Minitest::Test
     stub_put("https://api.swiftner.com/channel/update/1", api_key)
     stub_delete("https://api.swiftner.com/channel/delete/1", api_key)
   end
+  # rubocop:enable Layout/LineLength
 
   def test_find_channels
     channels = @channel_service.find_channels
