@@ -8,6 +8,12 @@ class VideoContentTest < Minitest::Test
     create_and_stub_client
   end
 
+  def stub_api_requests(api_key = "swiftner-api-key")
+    stub_get("https://api.swiftner.com/video-content/get-all/", [{ id: 1, media_type: "video" }].to_json, api_key)
+    stub_get("https://api.swiftner.com/video-content/get/1", { id: 1, media_type: "video" }.to_json, api_key)
+    stub_put("https://api.swiftner.com/video-content/update/1", api_key)
+  end
+
   def test_find_video_contents
     video_contents = @video_content_service.find_video_contents
     assert video_contents.is_a?(Array)

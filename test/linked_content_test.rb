@@ -8,6 +8,17 @@ class LinkedContentTest < Minitest::Test
     create_and_stub_client
   end
 
+  def stub_api_requests(api_key = "swiftner-api-key")
+    stub_get("https://api.swiftner.com/linked-content/get-all/", [{ id: 1, type: "linked_content" }].to_json, api_key)
+    stub_get("https://api.swiftner.com/linked-content/get/1", { id: 1, type: "linked_content" }.to_json, api_key)
+    stub_post("https://api.swiftner.com/linked-content/create", api_key)
+    stub_post("https://api.swiftner.com/linked-content/batch-create", api_key)
+    stub_put("https://api.swiftner.com/linked-content/update/1", api_key)
+    stub_delete("https://api.swiftner.com/linked-content/delete/1", api_key)
+    stub_get("https://api.swiftner.com/linked-content/get/1/transcriptions", [{ id: 1, language: "en" }].to_json, api_key)
+    stub_post("https://api.swiftner.com/linked-content/transcribe/1", api_key)
+  end
+
   def test_find_linked_contents
     linked_contents = @linked_content_service.find_linked_contents
     assert linked_contents.is_a?(Array)

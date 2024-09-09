@@ -8,6 +8,22 @@ class MeetingTest < Minitest::Test
     create_and_stub_client
   end
 
+  # rubocop:disable Metrics/LineLength, Metrics/ MethodLength
+  def stub_api_requests(api_key = "swiftner-api-key")
+    stub_get("https://api.swiftner.com/meeting/get-meetings", [{ id: 1, language: "no", space_id: 1 }].to_json, api_key)
+    stub_get("https://api.swiftner.com/meeting/get/1", { id: 1, language: "no", space_id: 1, space: 1, state: "not_started" }.to_json, api_key)
+    stub_get("https://api.swiftner.com/meeting/get/2", { id: 2, language: "no", space_id: 1, space: 1, state: "ongoing" }.to_json, api_key)
+    stub_get("https://api.swiftner.com/meeting/get/3", { id: 3, language: "no", space_id: 1, space: 1, state: "paused" }.to_json, api_key)
+    stub_post_body("https://api.swiftner.com/meeting/1/start", { id: 1, language: "no", space_id: 1, space: 1, state: "ongoing" }.to_json, api_key)
+    stub_post_body("https://api.swiftner.com/meeting/2/pause", { id: 2, language: "no", space_id: 1, space: 1, state: "paused" }.to_json, api_key)
+    stub_post_body("https://api.swiftner.com/meeting/2/end", { id: 2, language: "no", space_id: 1, space: 1, state: "ended" }.to_json, api_key)
+    stub_post_body("https://api.swiftner.com/meeting/3/resume", { id: 3, language: "no", space_id: 1, space: 1, state: "ongoing" }.to_json, api_key)
+    stub_post("https://api.swiftner.com/meeting/create", api_key)
+    stub_put("https://api.swiftner.com/meeting/update/1", api_key)
+    stub_delete("https://api.swiftner.com/meeting/delete/1", api_key)
+  end
+  # rubocop:enable Metrics/LineLength, Metrics/ MethodLength
+
   def test_find_meetings
     meetings = @meeting_service.find_meetings
     assert meetings.is_a?(Array)
