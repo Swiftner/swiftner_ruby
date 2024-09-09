@@ -27,6 +27,35 @@ class MeetingTest < Minitest::Test
     assert_equal "New meeting", meeting.details["title"]
   end
 
+  def test_start_meeting
+    meeting = @meeting_service.find(1)
+    assert_equal "not_started", meeting.details["state"]
+    meeting.start
+    assert_equal "ongoing", meeting.details["state"]
+  end
+
+  def test_end_meeting
+    meeting = @meeting_service.find(2)
+    assert_equal "ongoing", meeting.details["state"]
+    meeting.end
+    assert_equal "ended", meeting.details["state"]
+  end
+
+  def test_pause_meeting
+    meeting = @meeting_service.find(2)
+    assert_equal "ongoing", meeting.details["state"]
+    meeting.pause
+    puts meeting.details
+    assert_equal "paused", meeting.details["state"]
+  end
+
+  def test_resume_meeting
+    meeting = @meeting_service.find(3)
+    assert_equal "paused", meeting.details["state"]
+    meeting.resume
+    assert_equal "ongoing", meeting.details["state"]
+  end
+
   def test_update_meeting
     meeting = @meeting_service.find(1)
     meeting.update(title: "Updated title")

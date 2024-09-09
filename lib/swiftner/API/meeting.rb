@@ -49,6 +49,7 @@ module Swiftner
       # Starts a meeting
       # @return [Swiftner::API::Meeting]
       def start
+        # Can't start meeting if space does not exist or space is live with another meeting
         if @details["state"] != "not_started"
           raise Swiftner::Error, "Meeting state must be 'not_started' to start the meeting."
         end
@@ -73,7 +74,7 @@ module Swiftner
           "/meeting/#{id}/end",
           headers: { "Content-Type" => "application/json" }
         )
-        @details = response
+        @details = response.parsed_response
         self
       end
 
@@ -86,7 +87,7 @@ module Swiftner
           "/meeting/#{id}/pause",
           headers: { "Content-Type" => "application/json" }
         )
-        @details = response
+        @details = response.parsed_response
         self
       end
 
@@ -99,7 +100,7 @@ module Swiftner
           "/meeting/#{id}/resume",
           headers: { "Content-Type" => "application/json" }
         )
-        @details = response
+        @details = response.parsed_response
         self
       end
 

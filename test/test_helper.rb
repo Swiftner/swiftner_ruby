@@ -70,10 +70,17 @@ def stub_api_requests(api_key)
   stub_delete("https://api.swiftner.com/channel/delete/1", api_key)
 
   stub_get("https://api.swiftner.com/meeting/get-meetings", [{ id: 1, language: "no", space_id: 1 }].to_json, api_key)
-  stub_get("https://api.swiftner.com/meeting/get/1", { id: 1, language: "no", space_id: 1, space: 1 }.to_json, api_key)
+  stub_get("https://api.swiftner.com/meeting/get/1", { id: 1, language: "no", space_id: 1, space: 1, state: "not_started" }.to_json, api_key)
+  stub_get("https://api.swiftner.com/meeting/get/2", { id: 2, language: "no", space_id: 1, space: 1, state: "ongoing" }.to_json, api_key)
+  stub_get("https://api.swiftner.com/meeting/get/3", { id: 3, language: "no", space_id: 1, space: 1, state: "paused" }.to_json, api_key)
+  stub_post_body("https://api.swiftner.com/meeting/1/start", { id: 1, language: "no", space_id: 1, space: 1, state: "ongoing" }.to_json, api_key)
+  stub_post_body("https://api.swiftner.com/meeting/2/pause", { id: 2, language: "no", space_id: 1, space: 1, state: "paused" }.to_json, api_key)
+  stub_post_body("https://api.swiftner.com/meeting/2/end", { id: 2, language: "no", space_id: 1, space: 1, state: "ended" }.to_json, api_key)
+  stub_post_body("https://api.swiftner.com/meeting/3/resume", { id: 3, language: "no", space_id: 1, space: 1, state: "ongoing" }.to_json, api_key)
   stub_post("https://api.swiftner.com/meeting/create", api_key)
   stub_put("https://api.swiftner.com/meeting/update/1", api_key)
   stub_delete("https://api.swiftner.com/meeting/delete/1", api_key)
+
 end
 # rubocop:enable Metrics/LineLength, Metrics/ MethodLength
 
@@ -87,7 +94,7 @@ def stub_get(url, return_body, api_key)
     )
 end
 
-def stub_post(url, api_key)
+def stub_post(url, api_key )
   stub_request(:post, url)
     .with(headers: { "Api_Key_Header" => api_key })
     .to_return do |request|
@@ -96,6 +103,17 @@ def stub_post(url, api_key)
     { status: 200, body: persisted_body.to_json, headers: { "Content-Type" => "application/json" } }
   end
 end
+
+def stub_post_body(url, return_body, api_key)
+  stub_request(:post, url)
+    .with(headers: { "Api_Key_Header" => api_key })
+    .to_return(
+      status: 200,
+      body: return_body,
+      headers: { "Content-Type" => "application/json" }
+    )
+end
+
 
 def stub_put(url, api_key)
   stub_request(:put, url)
