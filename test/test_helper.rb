@@ -58,6 +58,16 @@ def stub_put(url, api_key)
   end
 end
 
+def stub_put_body(url, return_body, api_key)
+  stub_request(:put, url)
+    .with(headers: { "Api_Key_Header" => api_key })
+    .to_return(
+      status: 200,
+      body: return_body,
+      headers: { "Content-Type" => "application/json" }
+    )
+end
+
 def stub_delete(url, api_key)
   stub_request(:delete, url)
     .with(headers: { "Api_Key_Header" => api_key })
