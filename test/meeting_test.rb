@@ -45,7 +45,6 @@ class MeetingTest < Minitest::Test
     meeting = @meeting_service.find(2)
     assert_equal "ongoing", meeting.details["state"]
     meeting.pause
-    puts meeting.details
     assert_equal "paused", meeting.details["state"]
   end
 
