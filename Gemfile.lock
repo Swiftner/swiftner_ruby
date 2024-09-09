@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    swiftner (0.0.5)
+    swiftner (0.0.6)
       httparty (~> 0.21)
 
 GEM
