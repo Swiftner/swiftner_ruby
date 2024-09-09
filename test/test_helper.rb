@@ -80,7 +80,6 @@ def stub_api_requests(api_key)
   stub_post("https://api.swiftner.com/meeting/create", api_key)
   stub_put("https://api.swiftner.com/meeting/update/1", api_key)
   stub_delete("https://api.swiftner.com/meeting/delete/1", api_key)
-
 end
 # rubocop:enable Metrics/LineLength, Metrics/ MethodLength
 
@@ -94,7 +93,7 @@ def stub_get(url, return_body, api_key)
     )
 end
 
-def stub_post(url, api_key )
+def stub_post(url, api_key)
   stub_request(:post, url)
     .with(headers: { "Api_Key_Header" => api_key })
     .to_return do |request|
@@ -113,7 +112,6 @@ def stub_post_body(url, return_body, api_key)
       headers: { "Content-Type" => "application/json" }
     )
 end
-
 
 def stub_put(url, api_key)
   stub_request(:put, url)
