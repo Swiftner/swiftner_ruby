@@ -49,11 +49,6 @@ module Swiftner
       # Starts a meeting
       # @return [Swiftner::API::Meeting]
       def start
-        # Can't start meeting if space does not exist or space is live with another meeting
-        if @details["state"] != "not_started"
-          raise Swiftner::Error, "Meeting state must be 'not_started' to start the meeting."
-        end
-
         response = client.post(
           "/meeting/#{id}/start",
           headers: { "Content-Type" => "application/json" }
@@ -66,10 +61,6 @@ module Swiftner
       # Ends a meeting
       # @return [Swiftner::API::Meeting]
       def end
-        if (@details["state"] == "not_started") || (@details["state"] == "ended")
-          raise Swiftner::Error, "Meeting state must be 'ongoing' or 'paused' to end the meeting."
-        end
-
         response = client.post(
           "/meeting/#{id}/end",
           headers: { "Content-Type" => "application/json" }
@@ -81,8 +72,6 @@ module Swiftner
       # Pauses a meeting
       # @return [Swiftner::API::Meeting, nil]
       def pause
-        raise Swiftner::Error, "Meeting state must be 'ongoing' to pause meeting." if @details["state"] != "ongoing"
-
         response = client.post(
           "/meeting/#{id}/pause",
           headers: { "Content-Type" => "application/json" }
@@ -94,8 +83,6 @@ module Swiftner
       # Resumes a meeting
       # @return [Swiftner::API::Meeting]
       def resume
-        raise Swiftner::Error, "Meeting state must 'paused' to resume meeting." if @details["state"] != "paused"
-
         response = client.post(
           "/meeting/#{id}/resume",
           headers: { "Content-Type" => "application/json" }
