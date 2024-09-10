@@ -8,7 +8,6 @@ class MeetingTest < Minitest::Test
     create_and_stub_client
   end
 
-  # rubocop:disable Metrics/LineLength, Metrics/ MethodLength
   def stub_api_requests(api_key = "swiftner-api-key")
     stub_get("https://api.swiftner.com/meeting/get-meetings", [{ id: 1, language: "no", space_id: 1 }].to_json, api_key)
     stub_get("https://api.swiftner.com/meeting/get/1", { id: 1, language: "no", space_id: 1, space: 1, state: "not_started" }.to_json, api_key)
@@ -22,7 +21,6 @@ class MeetingTest < Minitest::Test
     stub_put("https://api.swiftner.com/meeting/update/1", api_key)
     stub_delete("https://api.swiftner.com/meeting/delete/1", api_key)
   end
-  # rubocop:enable Metrics/LineLength, Metrics/ MethodLength
 
   def test_find_meetings
     meetings = @meeting_service.find_meetings

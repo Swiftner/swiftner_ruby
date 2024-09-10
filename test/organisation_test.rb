@@ -8,7 +8,6 @@ class OrganisationTest < Minitest::Test
     create_and_stub_client
   end
 
-  # rubocop:disable Layout/LineLength
   def stub_api_requests(api_key = "swiftner-api-key")
     stub_get("https://api.swiftner.com/organisation/get-current-user-orgs", [{ id: 1, name: "test", description: "test" }].to_json, api_key)
     stub_get("https://api.swiftner.com/organisation/get/1", { id: 1, name: "test", description: "test" }.to_json, api_key)
@@ -17,7 +16,6 @@ class OrganisationTest < Minitest::Test
     stub_put("https://api.swiftner.com/organisation/update/1", api_key)
     stub_delete("https://api.swiftner.com/organisation/delete/1", api_key)
   end
-  # rubocop:enable Layout/LineLength
 
   def test_find_organisations
     organisations = @organisation_service.find_organisations
