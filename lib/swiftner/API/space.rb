@@ -28,6 +28,7 @@ module Swiftner
       # @option attributes [Integer] :prompt_id (optional)
       def self.create(attributes)
         validate_required(attributes, :name, :description)
+        validate_language(attributes)
 
         response = client.post(
           "/space/create",
@@ -49,6 +50,7 @@ module Swiftner
         @details = @details.merge(attributes)
 
         self.class.validate_required(@details, :name, :description)
+        self.class.validate_language(@details)
 
         client.put(
           "/space/update/#{id}",

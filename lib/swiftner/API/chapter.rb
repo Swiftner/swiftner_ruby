@@ -34,6 +34,7 @@ module Swiftner
       # @return [Swiftner::API::Chapter]
       def self.create(attributes)
         validate_required(attributes, *REQUIRED_ATTRIBUTES)
+        validate_language(attributes)
 
         response = client.post(
           "/chapter/create",
@@ -58,6 +59,7 @@ module Swiftner
         @details = @details.merge(attributes)
 
         self.class.validate_required(@details, *REQUIRED_ATTRIBUTES)
+        self.class.validate_language(@details)
 
         client.put(
           "/chapter/update/#{id}",

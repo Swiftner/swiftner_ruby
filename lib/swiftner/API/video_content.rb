@@ -22,10 +22,20 @@ module Swiftner
 
       # Updates video content
       # @param [Hash] attributes
+      # @option attributes [String] :title (optional)
+      # @option attributes [String] :description (optional)
+      # @option attributes [String] :start (optional)
+      # @option attributes [Integer] :duration (optional)
+      # @option attributes [String] :path (optional)
+      # @option attributes [String] :thumbnail_url (optional)
+      # @option attributes [String] :audio_url (optional)
+      # @option attributes [String] :language (optional)
+      # @option attributes [Integer] :prompt_id (optional)
       # @return [Swiftner::API::VideoContent]
       def update(attributes)
         attributes = attributes.transform_keys(&:to_s)
         @details = @details.merge(attributes)
+        self.class.validate_language(@details)
 
         client.put(
           "/video-content/update/#{id}",

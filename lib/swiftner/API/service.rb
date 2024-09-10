@@ -23,6 +23,15 @@ module Swiftner
         raise ArgumentError, "Key(s) '#{missing_keys.join(", ")}' are missing in attributes. #{attributes.inspect}"
       end
 
+      def self.validate_language(attributes)
+        return unless attributes.key?(:language)
+
+        return if Swiftner::Configuration::SUPPORTED_LANGUAGES.include?(attributes[:language])
+
+        raise ArgumentError, "Language '#{attributes[:language]}' is not supported.
+                              Supported languages are #{Swiftner::Configuration::SUPPORTED_LANGUAGES.join(", ")}"
+      end
+
       def self.map_collection(response)
         response.map { |item| build(item) }
       end
