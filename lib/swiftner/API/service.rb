@@ -15,12 +15,16 @@ module Swiftner
       end
 
       def self.validate_required(attributes, *keys)
-        attr_str_keys = attributes.transform_keys(&:to_s)
-        missing_keys = keys.map(&:to_s).reject { |key| attr_str_keys.key?(key) }
+        missing_keys = find_missing_keys(attributes, keys)
 
         return unless missing_keys.any?
 
-        raise ArgumentError, "Key(s) '#{missing_keys.join(", ")}' are missing in attributes. #{attributes.inspect}"
+        # Formatting error message
+        formatted_keys = missing_keys.map do |key|
+          key.is_a?(Array) ? "(#{key.join(" or ")})" : key
+        end.join(", ")
+
+        raise ArgumentError, "Key(s) '#{formatted_keys}' are missing in attributes. #{attributes.inspect}"
       end
 
       def self.validate_language(attributes)
@@ -42,6 +46,16 @@ module Swiftner
         @id = attributes["id"]
         @details = attributes
         @client = client
+      end
+
+      # Finds keys or key group (if an array) that are missing from the given attributes.
+      # Only one of each key group is required to be present in the attributes.
+      def self.find_missing_keys(attributes, keys)
+        attr_str_keys = attributes.transform_keys(&:to_s)
+        keys.reject do |key|
+          key = Array(key).map(&:to_s)
+          key.map(&:to_s).any? { |k| attr_str_keys.key?(k) }
+        end
       end
     end
   end
