@@ -32,6 +32,7 @@ module Swiftner
       # @option attributes [String] :audio_url (optional)
       # @option attributes [Integer] :prompt_id (optional)
       def self.create(attributes)
+        validate_language(attributes)
         response = client.post(
           "/upload/create",
           body: attributes.to_json,

@@ -36,6 +36,7 @@ module Swiftner
       # @return [Swiftner::API::Meeting]
       def self.create(attributes)
         validate_required(attributes, *REQUIRED_ATTRIBUTES)
+        validate_language(attributes)
 
         response = client.post(
           "/meeting/create",
@@ -108,6 +109,7 @@ module Swiftner
         @details = @details.merge(attributes)
 
         self.class.validate_required(@details, :language, :space)
+        self.class.validate_language(@details)
 
         client.put(
           "/meeting/update/#{id}",

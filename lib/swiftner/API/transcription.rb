@@ -23,6 +23,8 @@ module Swiftner
       # @option attributes [String] :prompt_id (optional)
       # @option attributes [Boolean] :published (optional)
       def self.create(attributes)
+        validate_required(attributes, :start, :duration, :video_content_id)
+        validate_language(attributes)
         response = client.post(
           "/transcription/create",
           body: attributes.to_json,

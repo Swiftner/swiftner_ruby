@@ -35,6 +35,7 @@ module Swiftner
       # @return [Swiftner::API::LinkedContent]
       def self.create(attributes)
         validate_required(attributes, :url)
+        validate_language(attributes)
 
         response = client.post(
           "/linked-content/create",
@@ -49,7 +50,10 @@ module Swiftner
       # @param [Array<Hash>] array_of_attributes
       # @return [Array<Swiftner::API::LinkedContent>]
       def self.batch_create(array_of_attributes)
-        array_of_attributes.each { |attributes| validate_required(attributes, :url) }
+        array_of_attributes.each do |attributes|
+          validate_required(attributes, :url)
+          validate_language(attributes)
+        end
 
         response = client.post(
           "/linked-content/batch-create",
@@ -76,6 +80,8 @@ module Swiftner
         attributes = attributes.transform_keys(&:to_s)
         @details = @details.merge(attributes)
 
+        self.class.validate_required(@details, :url)
+        self.class.validate_language(@details)
         client.put(
           "/linked-content/update/#{id}",
           body: @details.to_json,
