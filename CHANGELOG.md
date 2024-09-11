@@ -1,4 +1,5 @@
 ## [Unreleased]
+- Added Recording service with CRUD operations. [#16](https://github.com/Swiftner/swiftner_ruby/pull/16)
 - Validating if language is supported. `validating_require` able to take key groups. [#15](https://github.com/Swiftner/swiftner_ruby/pull/15)
 - Added YARD comments to all service functions. [#13](https://github.com/Swiftner/swiftner_ruby/pull/13)
  
