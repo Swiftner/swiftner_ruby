@@ -15,7 +15,6 @@ def create_and_stub_client(api_key = "swiftner-api-key")
   stub_api_requests(api_key)
 end
 
-# rubocop:disable Metrics/LineLength, Metrics/ MethodLength
 def stub_api_requests(api_key)
   stub_get("https://api.swiftner.com/upload/get-uploads/", [{ id: 1, media_type: "video" }].to_json, api_key)
   stub_get("https://api.swiftner.com/upload/get/1", { id: 1, media_type: "video" }.to_json, api_key)
@@ -80,8 +79,13 @@ def stub_api_requests(api_key)
   stub_post("https://api.swiftner.com/meeting/create", api_key)
   stub_put("https://api.swiftner.com/meeting/update/1", api_key)
   stub_delete("https://api.swiftner.com/meeting/delete/1", api_key)
+
+  stub_get("https://api.swiftner.com/recording/get_recordings", [{ id: 1, start: "2024-09-11T06:39:09.301923", path: "https://youtube.com", channel_id: 1, meeting_id: 1, title: "New recording" }].to_json, api_key)
+  stub_get("https://api.swiftner.com/recording/get/1", { id: 1, start: "2024-09-11T06:39:09.301923", path: "https://youtube.com", channel_id: 1, meeting_id: 1, title: "New recording" }.to_json, api_key)
+  stub_post("https://api.swiftner.com/recording/create", api_key)
+  stub_put("https://api.swiftner.com/recording/update/1", api_key)
+  stub_delete("https://api.swiftner.com/recording/delete/1", api_key)
 end
-# rubocop:enable Metrics/LineLength, Metrics/ MethodLength
 
 def stub_get(url, return_body, api_key)
   stub_request(:get, url)
