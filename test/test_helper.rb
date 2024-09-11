@@ -32,16 +32,16 @@ def stub_api_requests(api_key)
   stub_crud("chapter", { id: 1, title: "test", start: "2024-09-09T00:00:00", duration: "2024-09-09T00:00:02", video_content_id: 1 }, api_key)
 
   stub_crud("organisation", { id: 1, name: "test", description: "test" }, api_key, "get-current-user-orgs")
-  stub_put_body("https://api.swiftner.com/organisation/add-org-to-token?organisation_id=1", { "access_token" => "eyekljsadflkajdfs" }.to_json, api_key)
+  stub_put("https://api.swiftner.com/organisation/add-org-to-token?organisation_id=1", api_key, { "access_token" => "eyekljsadflkajdfs" }.to_json)
 
   stub_crud("channel", { id: 1, name: "test", type: "audio", space_id: 1 }, api_key)
   stub_get("https://api.swiftner.com/channel/is_channel_live?channel_id=1", { "status" => "live" }.to_json, api_key)
 
   stub_crud("meeting", { id: 1, language: "no", space_id: 1, space: 1, state: "not_started" }, api_key)
-  stub_post_body("https://api.swiftner.com/meeting/1/start", { id: 1, language: "no", space_id: 1, space: 1, state: "ongoing" }.to_json, api_key)
-  stub_post_body("https://api.swiftner.com/meeting/1/pause", { id: 2, language: "no", space_id: 1, space: 1, state: "paused" }.to_json, api_key)
-  stub_post_body("https://api.swiftner.com/meeting/1/end", { id: 2, language: "no", space_id: 1, space: 1, state: "ended" }.to_json, api_key)
-  stub_post_body("https://api.swiftner.com/meeting/1/resume", { id: 3, language: "no", space_id: 1, space: 1, state: "ongoing" }.to_json, api_key)
+  stub_post("https://api.swiftner.com/meeting/1/start", api_key, { id: 1, language: "no", space_id: 1, space: 1, state: "ongoing" }.to_json)
+  stub_post("https://api.swiftner.com/meeting/1/pause", api_key, { id: 2, language: "no", space_id: 1, space: 1, state: "paused" }.to_json)
+  stub_post("https://api.swiftner.com/meeting/1/end", api_key, { id: 2, language: "no", space_id: 1, space: 1, state: "ended" }.to_json)
+  stub_post("https://api.swiftner.com/meeting/1/resume", api_key, { id: 3, language: "no", space_id: 1, space: 1, state: "ongoing" }.to_json)
 
   stub_crud("upload", { id: 1, media_type: "video" }, api_key)
   stub_post("https://api.swiftner.com/transcription/create", api_key)
@@ -68,43 +68,23 @@ def stub_get(url, return_body, api_key)
     )
 end
 
-def stub_post(url, api_key)
+def stub_post(url, api_key, return_body = nil)
   stub_request(:post, url)
     .with(headers: { "Api_Key_Header" => api_key })
     .to_return do |request|
-    persisted_body = parse_body(request.body)
+    body = return_body || parse_body(request.body).to_json
 
-    { status: 200, body: persisted_body.to_json, headers: { "Content-Type" => "application/json" } }
+    { status: 200, body: body, headers: { "Content-Type" => "application/json" } }
   end
 end
 
-def stub_post_body(url, return_body, api_key)
-  stub_request(:post, url)
-    .with(headers: { "Api_Key_Header" => api_key })
-    .to_return(
-      status: 200,
-      body: return_body,
-      headers: { "Content-Type" => "application/json" }
-    )
-end
-
-def stub_put(url, api_key)
+def stub_put(url, api_key, return_body = nil)
   stub_request(:put, url)
     .with(headers: { "Api_Key_Header" => api_key })
     .to_return do |request|
-    persisted_body = parse_body(request.body)
-    { status: 200, body: persisted_body.to_json, headers: { "Content-Type" => "application/json" } }
+    body = return_body || parse_body(request.body).to_json
+    { status: 200, body: body, headers: { "Content-Type" => "application/json" } }
   end
-end
-
-def stub_put_body(url, return_body, api_key)
-  stub_request(:put, url)
-    .with(headers: { "Api_Key_Header" => api_key })
-    .to_return(
-      status: 200,
-      body: return_body,
-      headers: { "Content-Type" => "application/json" }
-    )
 end
 
 def stub_delete(url, api_key)
