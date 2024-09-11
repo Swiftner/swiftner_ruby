@@ -6,7 +6,7 @@ module Swiftner
     # Inherits from the Service class.
     # Provides methods for interacting with chapters.
     class Chapter < Service
-      REQUIRED_ATTRIBUTES = %i[title duration video_content_id start].freeze
+      REQUIRED_ATTRIBUTES = [:title, :duration, :video_content_id, %i[start start_seconds]].freeze
       # Finds all chapters for a video content.
       # @param [Integer] video_content_id
       # @return [Array<Swiftner::API::Chapter>]
@@ -28,12 +28,13 @@ module Swiftner
       # @option attributes [String] :title (required)
       # @option attributes [String] :duration (required)
       # @option attributes [Integer] :video_content_id (required)
-      # @option attributes [String] :start (required)
-      # @option attributes [String] :start_seconds (optional)
+      # @option attributes [String] :start (required or start_seconds)
+      # @option attributes [String] :start_seconds (required or start)
       # @option attributes [String] :language (optional)
       # @return [Swiftner::API::Chapter]
       def self.create(attributes)
         validate_required(attributes, *REQUIRED_ATTRIBUTES)
+        validate_language(attributes)
 
         response = client.post(
           "/chapter/create",
@@ -58,6 +59,7 @@ module Swiftner
         @details = @details.merge(attributes)
 
         self.class.validate_required(@details, *REQUIRED_ATTRIBUTES)
+        self.class.validate_language(@details)
 
         client.put(
           "/chapter/update/#{id}",

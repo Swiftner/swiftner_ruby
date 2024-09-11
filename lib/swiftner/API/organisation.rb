@@ -39,6 +39,7 @@ module Swiftner
       # @return [Swiftner::API::Organisation]
       def self.create(attributes)
         validate_required(attributes, *REQUIRED_ATTRIBUTES)
+        validate_language(attributes)
         response = client.post(
           "/organisation/create",
           body: attributes.to_json,
@@ -59,6 +60,7 @@ module Swiftner
         @details = @details.merge(attributes)
 
         self.class.validate_required(@details, *REQUIRED_ATTRIBUTES)
+        self.class.validate_language(@details)
 
         client.put(
           "/organisation/update/#{id}",
