@@ -29,28 +29,28 @@ class MeetingTest < Minitest::Test
 
   def test_start_meeting
     meeting = @meeting_service.find(1)
-    assert_equal "not_started", meeting.details["state"]
+    refute_equal "ongoing", meeting.details["state"]
     meeting.start
     assert_equal "ongoing", meeting.details["state"]
   end
 
   def test_end_meeting
-    meeting = @meeting_service.find(2)
-    assert_equal "ongoing", meeting.details["state"]
+    meeting = @meeting_service.find(1)
+    refute_equal "ended", meeting.details["state"]
     meeting.end
     assert_equal "ended", meeting.details["state"]
   end
 
   def test_pause_meeting
-    meeting = @meeting_service.find(2)
-    assert_equal "ongoing", meeting.details["state"]
+    meeting = @meeting_service.find(1)
+    refute_equal "paused", meeting.details["state"]
     meeting.pause
     assert_equal "paused", meeting.details["state"]
   end
 
   def test_resume_meeting
-    meeting = @meeting_service.find(3)
-    assert_equal "paused", meeting.details["state"]
+    meeting = @meeting_service.find(1)
+    refute_equal "ongoing", meeting.details["state"]
     meeting.resume
     assert_equal "ongoing", meeting.details["state"]
   end

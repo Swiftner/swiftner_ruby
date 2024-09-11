@@ -9,7 +9,7 @@ module Swiftner
       # Find all linked contents
       # @return [Array<Swiftner::API::LinkedContent>]
       def self.find_linked_contents
-        response = client.get("/linked-content/get-all/")
+        response = client.get("/linked-content/get-all")
         map_collection(response)
       end
 

@@ -8,7 +8,7 @@ module Swiftner
       # Finds all video contents
       # @return [Array<Swiftner::API::VideoContent>]
       def self.find_video_contents
-        response = client.get("/video-content/get-all/")
+        response = client.get("/video-content/get-all")
         map_collection(response)
       end
 
