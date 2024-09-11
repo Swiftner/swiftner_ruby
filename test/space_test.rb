@@ -8,14 +8,6 @@ class SpaceTest < Minitest::Test
     create_and_stub_client
   end
 
-  def stub_api_requests(api_key = "swiftner-api-key")
-    stub_get("https://api.swiftner.com/space/get-spaces", [{ id: 1, name: "test", description: "test" }].to_json, api_key)
-    stub_get("https://api.swiftner.com/space/get/1", { id: 1, name: "test", description: "test" }.to_json, api_key)
-    stub_post("https://api.swiftner.com/space/create", api_key)
-    stub_put("https://api.swiftner.com/space/update/1", api_key)
-    stub_delete("https://api.swiftner.com/space/delete/1", api_key)
-  end
-
   def test_find_spaces
     spaces = @space_service.find_spaces
     assert spaces.is_a?(Array)

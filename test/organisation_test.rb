@@ -8,15 +8,6 @@ class OrganisationTest < Minitest::Test
     create_and_stub_client
   end
 
-  def stub_api_requests(api_key = "swiftner-api-key")
-    stub_get("https://api.swiftner.com/organisation/get-current-user-orgs", [{ id: 1, name: "test", description: "test" }].to_json, api_key)
-    stub_get("https://api.swiftner.com/organisation/get/1", { id: 1, name: "test", description: "test" }.to_json, api_key)
-    stub_put_body("https://api.swiftner.com/organisation/add-org-to-token?organisation_id=1", { "access_token" => "eyekljsadflkajdfs" }.to_json, api_key)
-    stub_post("https://api.swiftner.com/organisation/create", api_key)
-    stub_put("https://api.swiftner.com/organisation/update/1", api_key)
-    stub_delete("https://api.swiftner.com/organisation/delete/1", api_key)
-  end
-
   def test_find_organisations
     organisations = @organisation_service.find_organisations
     assert organisations.is_a?(Array)

@@ -8,15 +8,6 @@ class UploadTest < Minitest::Test
     create_and_stub_client
   end
 
-  def stub_api_requests(api_key = "swiftner-api-key")
-    stub_post("https://api.swiftner.com/transcription/create", api_key)
-    stub_get("https://api.swiftner.com/upload/get-uploads/", [{ id: 1, media_type: "video" }].to_json, api_key)
-    stub_get("https://api.swiftner.com/upload/get/1", { id: 1, media_type: "video" }.to_json, api_key)
-    stub_post("https://api.swiftner.com/upload/create", api_key)
-    stub_delete("https://api.swiftner.com/upload/delete/1", api_key)
-    stub_get("https://api.swiftner.com/upload/get/1/transcriptions", [{ id: 1, language: "en" }].to_json, api_key)
-  end
-
   def test_find_uploads
     uploads = @upload_service.find_uploads
     assert uploads.is_a?(Array)

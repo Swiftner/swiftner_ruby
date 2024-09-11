@@ -9,7 +9,7 @@ module Swiftner
       # Finds all uploads
       # @return [Array<Swiftner::API::Upload>]
       def self.find_uploads
-        response = client.get("/upload/get-uploads/")
+        response = client.get("/upload/get-uploads")
         map_collection(response)
       end
 
