@@ -27,13 +27,29 @@ module Swiftner
         raise ArgumentError, "Key(s) '#{formatted_keys}' are missing in attributes. #{attributes.inspect}"
       end
 
-      def self.validate_language(attributes)
-        return unless attributes.key?(:language)
+      def self.validate_language(attributes, key = :language)
+        return unless attributes.key?(key)
 
-        return if Swiftner::Configuration::SUPPORTED_LANGUAGES.include?(attributes[:language])
+        return if Swiftner::Configuration::SUPPORTED_LANGUAGES.include?(attributes[key])
 
-        raise ArgumentError, "Language '#{attributes[:language]}' is not supported.
+        raise ArgumentError, "Language '#{attributes[key]}' is not supported.
                               Supported languages are #{Swiftner::Configuration::SUPPORTED_LANGUAGES.join(", ")}"
+      end
+
+      def self.validate_file(file_path, expected_file_extension = "")
+        raise ArgumentError, "File does not exist" unless File.exist?(file_path)
+        raise ArgumentError, "File is unreadable" unless File.readable?(file_path)
+
+        file_extension = File.extname(file_path).delete_prefix(".")
+        unless file_extension == expected_file_extension || expected_file_extension.empty?
+          raise ArgumentError,
+                "File extension '#{expected_file_extension}' does not match with file '#{file_extension}'"
+        end
+
+        return if %w[mp4 mov].include?(file_extension)
+
+        raise ArgumentError, "File type '#{attributes[key]}' is not supported.
+                              Supported file types are #{%w[mp4 mov].join(", ")}"
       end
 
       def self.map_collection(response)
