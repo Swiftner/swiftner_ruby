@@ -41,6 +41,29 @@ module Swiftner
         build(response.parsed_response) if response.success?
       end
 
+      # Creates an upload from local file.
+      # @param [Hash] attributes
+      # @option attributes [String] :upload_file_extension (required)
+      # @option attributes [String] :upload_language (required)
+      # @option attributes [String] :upload_title (optional)
+      # @option attributes [String] :upload_description (optional)
+      # @option attributes [String] :upload_is_playlist (optional)
+      # @param [String] file_path
+      def self.create_from_file(attributes, file_path)
+        validate_required(attributes, %i[upload_file_extension upload_language])
+        validate_language(attributes, :upload_language)
+        validate_file(file_path, attributes[:upload_file_extension])
+
+        signed_url = client.post(
+          "/upload/generate_signed_url",
+          body: attributes.to_json,
+          headers: { "Content-Type" => "application/json" }
+        )["url"]
+
+        client.put(signed_url, body: File.read(file_path), headers: { "Content-Type" => "application/octet-stream" })
+        # TODO: get created upload id and find it and return it
+      end
+
       # Deletes upload
       # @return [Hash]
       def delete
