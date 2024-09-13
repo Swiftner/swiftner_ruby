@@ -85,6 +85,12 @@ def stub_api_requests(api_key)
   stub_post("https://api.swiftner.com/recording/create", api_key)
   stub_put("https://api.swiftner.com/recording/update/1", api_key)
   stub_delete("https://api.swiftner.com/recording/delete/1", api_key)
+
+  stub_get("https://api.swiftner.com/prompt/get-prompts", [{ id: 1, text: "New prompt", description: "For everything new" }].to_json, api_key)
+  stub_get("https://api.swiftner.com/prompt/get/1", { id: 1, text: "New prompt", description: "For everything new" }.to_json, api_key)
+  stub_post("https://api.swiftner.com/prompt/create", api_key)
+  stub_put("https://api.swiftner.com/prompt/update/1", api_key)
+  stub_delete("https://api.swiftner.com/prompt/delete/1", api_key)
 end
 
 def stub_get(url, return_body, api_key)
