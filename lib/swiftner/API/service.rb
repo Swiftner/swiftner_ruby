@@ -46,7 +46,6 @@ module Swiftner
         accepted_file_types = video_file_types + audio_file_types
         return if accepted_file_types.include?(file_extension)
 
-
         raise ArgumentError,
               "File type '#{file_extension}' is not supported. Supported file types: #{accepted_file_types.join(", ")}"
       end

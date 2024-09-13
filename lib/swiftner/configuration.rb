@@ -28,6 +28,5 @@ module Swiftner
         audio: %w[mp3 wav wma m4v]
       }
     end
-
   end
 end

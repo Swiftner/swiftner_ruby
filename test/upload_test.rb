@@ -27,6 +27,15 @@ class UploadTest < Minitest::Test
     assert_equal "Sample title", upload.details["title"]
   end
 
+  def test_create_from_file
+    attributes = { upload_language: "invalid_language" }
+    file_path = "sample/path/to/file.mp4"
+
+    assert_raises(ArgumentError) do
+      @upload_service.create_from_file(attributes, file_path)
+    end
+  end
+
   def test_delete_upload
     upload = @upload_service.find(1)
     response = upload.delete

@@ -43,6 +43,12 @@ class ServiceTest < Minitest::Test
     end
   end
 
+  def test_validate_file
+    assert_raises(ArgumentError, "File does not exist") do
+      Swiftner::API::Service.validate_file("non_existent_file.txt")
+    end
+  end
+
   def teardown
     # Restore original Swiftner configuration
     Swiftner.configuration = @original_config
