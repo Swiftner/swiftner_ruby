@@ -51,36 +51,6 @@ module Swiftner
         build(response.parsed_response)
       end
 
-      # Updates segment.
-      # @param [Hash] attributes
-      # @option attributes [String] :text (required)
-      # @option attributes [String] :language (required)
-      # @option attributes [Integer] :video_start (required)
-      # @option attributes [Float] :start (required)
-      # @option attributes [Float] :end (required)
-      # @option attributes [String] :transcription_id (required)
-      # @option attributes [Array<Hash>] :words (required)
-      # @option words [String] :word (required)
-      # @option words [Float] :start (required)
-      # @option words [Float] :end (required)
-      # @option words [Integer] :probability (optional)
-      # @option attributes [String] :order (optional)
-      # @return [Swiftner::API::Segment]
-      def update(attributes)
-        attributes = attributes.transform_keys(&:to_s)
-        @details = @details.merge(attributes)
-
-        # self.class.validate_required(@details, *REQUIRED_ATTRIBUTES)
-        self.class.validate_language(@details)
-
-        client.put(
-          "/segment/update/#{id}",
-          body: @details.to_json,
-          headers: { "Content-Type" => "application/json" }
-        )
-        self
-      end
-
       # Deletes segment.
       # @return [Hash]
       def delete

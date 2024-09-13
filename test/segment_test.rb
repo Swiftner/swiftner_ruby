@@ -27,13 +27,6 @@ class SegmentTest < Minitest::Test
     assert_equal "New Segment", segment.details["text"]
   end
 
-  def test_update_segment
-    segment = @segment_service.find(1)
-    segment.update(text: "New text")
-    assert_equal "New text", segment.details["text"]
-    assert_equal 1, segment.id
-  end
-
   def test_delete_space
     segment = @segment_service.find(1)
     response = segment.delete

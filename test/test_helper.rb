@@ -89,7 +89,6 @@ def stub_api_requests(api_key)
   stub_get("https://api.swiftner.com/transcription/get/1/segments", [{ id: 1, text: "New Segment", language: "en", video_start: 1, start: 1.0, end: 2.0, transcription_id: 1, words: [{ word: "hello", start: 1.0, end: 1.5, probability: 0.9 }] }].to_json, api_key)
   stub_get("https://api.swiftner.com/segment/get/1", { id: 1, text: "New Segment", language: "en", video_start: 1, start: 1.0, end: 2.0, transcription_id: 1, words: [{ word: "hello", start: 1.0, end: 1.5, probability: 0.9 }] }.to_json, api_key)
   stub_post("https://api.swiftner.com/segment/create", api_key)
-  stub_put("https://api.swiftner.com/segment/update/1", api_key)
   stub_delete("https://api.swiftner.com/segment/delete/1", api_key)
 end
 
