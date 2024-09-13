@@ -36,20 +36,19 @@ module Swiftner
                               Supported languages are #{Swiftner::Configuration::SUPPORTED_LANGUAGES.join(", ")}"
       end
 
-      def self.validate_file(file_path, expected_file_extension = "")
+      def self.validate_file(file_path)
         raise ArgumentError, "File does not exist" unless File.exist?(file_path)
         raise ArgumentError, "File is unreadable" unless File.readable?(file_path)
 
         file_extension = File.extname(file_path).delete_prefix(".")
-        unless file_extension == expected_file_extension || expected_file_extension.empty?
-          raise ArgumentError,
-                "File extension '#{expected_file_extension}' does not match with file '#{file_extension}'"
-        end
+        video_file_types = Swiftner.configuration.fetch_accepted_file_types[:video]
+        audio_file_types = Swiftner.configuration.fetch_accepted_file_types[:audio]
+        accepted_file_types = video_file_types + audio_file_types
+        return if accepted_file_types.include?(file_extension)
 
-        return if %w[mp4 mov].include?(file_extension)
 
-        raise ArgumentError, "File type '#{attributes[key]}' is not supported.
-                              Supported file types are #{%w[mp4 mov].join(", ")}"
+        raise ArgumentError,
+              "File type '#{file_extension}' is not supported. Supported file types: #{accepted_file_types.join(", ")}"
       end
 
       def self.map_collection(response)

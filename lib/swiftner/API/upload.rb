@@ -43,17 +43,17 @@ module Swiftner
 
       # Creates an upload from local file.
       # @param [Hash] attributes
-      # @option attributes [String] :upload_file_extension (required)
       # @option attributes [String] :upload_language (required)
       # @option attributes [String] :upload_title (optional)
       # @option attributes [String] :upload_description (optional)
       # @option attributes [String] :upload_is_playlist (optional)
       # @param [String] file_path
       def self.create_from_file(attributes, file_path)
-        validate_required(attributes, %i[upload_file_extension upload_language])
+        validate_required(attributes, %i[upload_language])
         validate_language(attributes, :upload_language)
-        validate_file(file_path, attributes[:upload_file_extension])
+        validate_file(file_path)
 
+        attributes[:upload_file_extension] = File.extname(file_path).delete_prefix(".")
         signed_url = client.post(
           "/upload/generate_signed_url",
           body: attributes.to_json,
