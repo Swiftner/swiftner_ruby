@@ -44,6 +44,17 @@ module Swiftner
         )
         self
       end
+
+      # Created a url to the embedded editor
+      # @return [String] url to editor
+      def create_editor_link
+        result = client.post(
+          "/video-content/create_editor_link/#{id}",
+          body: {}.to_json,
+          headers: { "Content-Type" => "application/json" }
+        )
+        result["url"]
+      end
     end
   end
 end

@@ -26,4 +26,10 @@ class VideoContentTest < Minitest::Test
     assert_equal "New title", video_content.details["title"]
     assert_equal 1, video_content.id
   end
+
+  def test_create_editor_link
+    video_content = @video_content_service.find(1)
+    response = video_content.create_editor_link
+    assert response.is_a?(String)
+  end
 end

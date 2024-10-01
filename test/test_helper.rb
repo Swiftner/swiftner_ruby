@@ -26,6 +26,7 @@ def stub_api_requests(api_key)
   stub_get("https://api.swiftner.com/video-content/get-all/", [{ id: 1, media_type: "video" }].to_json, api_key)
   stub_get("https://api.swiftner.com/video-content/get/1", { id: 1, media_type: "video" }.to_json, api_key)
   stub_put("https://api.swiftner.com/video-content/update/1", api_key)
+  stub_post_body("https://api.swiftner.com/video-content/create_editor_link/1", { url: "https://app.swiftner.com/editor/1/abcde-12345" }.to_json, api_key)
 
   stub_get("https://api.swiftner.com/linked-content/get-all/", [{ id: 1, type: "linked_content", url: "https://youtube.com" }].to_json, api_key)
   stub_get("https://api.swiftner.com/linked-content/get/1", { id: 1, type: "linked_content", url: "https://youtube.com" }.to_json, api_key)
